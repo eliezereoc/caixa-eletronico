@@ -1,5 +1,4 @@
 let id_cliente = 0;
-let id_notas = 0;
 
 let qtdN100 = 0;
 let qtdN50 = 0;
@@ -73,11 +72,16 @@ caixaEletronico.controller("SaqueCtrl", [
     caixaCollection.getValueCaixa().then(function () {
       //passa a quantidade de cedulas de cada valor
       ///ex.: 10 notas de R$100,00
-      id_notas = caixaCollection.valueCaixa.id;
       qtdN100 = caixaCollection.valueCaixa.qtdN100;
       qtdN50 = caixaCollection.valueCaixa.qtdN50;
       qtdN20 = caixaCollection.valueCaixa.qtdN20;
       qtdN10 = caixaCollection.valueCaixa.qtdN10;
+
+      //quantidade de notas de cada valor
+      $scope.tn100 = qtdN100;
+      $scope.tn50 = qtdN50;
+      $scope.tn20 = qtdN20;
+      $scope.tn10 = qtdN10;
 
       //mostra quais notas estão disponiveis
       if (qtdN100) $scope.tNotas100 = "R$100";
@@ -117,7 +121,7 @@ caixaEletronico.controller("SaqueCtrl", [
       $scope.tNotas_saque_10 = 0;
       $scope.mesnagemSaque = "";
 
-      console.log(cedulasDisponiveis);
+      // console.log(cedulasDisponiveis);
 
       if (valorSaque == undefined) {
         $scope.mesnagemSaque = "Informe um valor valodo!";
@@ -134,7 +138,16 @@ caixaEletronico.controller("SaqueCtrl", [
             //verifica qual o valor da nota e passa a quantidade
             switch (valor) {
               case 100:
+                // if (quantidade > qtdN100) {
+                //   $scope.tNotas_saque_100 = quantidade - qtdN100;
+
+                //   valorASerSacado =
+                //     valorASerSacado - $scope.tNotas_saque_100 * 100;
+                // } else {
                 $scope.tNotas_saque_100 = quantidade;
+                // }
+                // console.log($scope.tNotas_saque_100);
+                // console.log(valorASerSacado);
                 break;
               case 50:
                 $scope.tNotas_saque_50 = quantidade;
@@ -147,6 +160,11 @@ caixaEletronico.controller("SaqueCtrl", [
                 break;
             }
             valorASerSacado = valorASerSacado % valor;
+
+            // console.log("VLR a ser sacado", valorASerSacado);
+            // console.log("qtd notas", quantidade);
+            // console.log("VLR da cedula", valor);
+            // console.log("Cedulas disponiveis", cedulasDisponiveis);
           }
 
           //multiplica a quantidade de notas pelo valor da nora
@@ -169,6 +187,12 @@ caixaEletronico.controller("SaqueCtrl", [
           qtdN20 = qtdN20 - $scope.tNotas_saque_20;
           qtdN10 = qtdN10 - $scope.tNotas_saque_10;
 
+          //Atualiza quantidade de notas de cada valor após o saque
+          $scope.tn100 = qtdN100;
+          $scope.tn50 = qtdN50;
+          $scope.tn20 = qtdN20;
+          $scope.tn10 = qtdN10;
+
           //soma a quantidade de cada cedulas para saber o total de notas disponiveis
           $scope.qtdCedulas = qtdN100 + qtdN50 + qtdN20 + qtdN10;
 
@@ -176,19 +200,19 @@ caixaEletronico.controller("SaqueCtrl", [
           $scope.mesnagemSaque = `Saque de R$${$scope.valorSacado} realizado com sucesso!`;
 
           //Atualiza o saldo da conta do cliente
-          clienteCollection
-            .putCliente(
-              id_cliente,
-              $scope.nomeCliente,
-              $scope.saldoConta,
-              $scope.totalSaques
-            )
-            .then(function () {});
+          // clienteCollection
+          //   .putCliente(
+          //     id_cliente,
+          //     $scope.nomeCliente,
+          //     $scope.saldoConta,
+          //     $scope.totalSaques
+          //   )
+          //   .then(function () {});
 
           //Atualiza o saldo de notas do caixa
-          caixaCollection
-            .putCaixa(id_notas, qtdN100, qtdN50, qtdN20, qtdN10)
-            .then(function () {});
+          // caixaCollection
+          //   .putCaixa(id_cliente, qtdN100, qtdN50, qtdN20, qtdN10)
+          //   .then(function () {});
         }
       }
     };

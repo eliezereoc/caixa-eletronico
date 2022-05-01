@@ -60,8 +60,10 @@ async function updateCliente(req, res, next) {
     let cliente = req.body;
     const clienteLog = cliente;
 
-    if (!cliente.id || !cliente.nome || !cliente.saldo || !cliente.saque) {
-      throw new Error("Todos os campos são obrigatórios!");
+    console.log(cliente);
+
+    if (!cliente.id || !cliente.nome || !cliente.saldo) {
+      throw new Error("PUT - Todos os campos são obrigatórios!");
     }
 
     cliente = await ClienteService.updateCliente(cliente);
