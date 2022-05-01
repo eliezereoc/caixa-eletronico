@@ -11,17 +11,17 @@ async function insertCaixa(caixa) {
     const db = client.db(process.env.DB_NAME);
     const collection = db.collection(process.env.DB_COLLECTION_CAIXA);
 
-    const icludeCaixa = await collection.insertMany([{ caixa: caixa }]);
+    // const icludeCaixa = await collection.insertMany([{ caixa: caixa }]);
 
-    // const icludeCaixa = await collection.insertMany([
-    //   {
-    //     id: caixa.id,
-    //     qtdN100: caixa.qtdN100,
-    //     qtdN50: caixa.qtdN50,
-    //     qtdN20: caixa.qtdN20,
-    //     qtdN10: caixa.qtdN10,
-    //   },
-    // ]);
+    const icludeCaixa = await collection.insertMany([
+      {
+        id: caixa.id,
+        qtdN100: caixa.qtdN100,
+        qtdN50: caixa.qtdN50,
+        qtdN20: caixa.qtdN20,
+        qtdN10: caixa.qtdN10,
+      },
+    ]);
 
     return icludeCaixa;
   } catch (error) {
@@ -99,7 +99,6 @@ async function updateCaixa(caixa) {
 
     const updateCaixa = await collection.updateOne(myquery, newvalues);
 
-    console.log(updateCaixa);
     return updateCaixa;
   } catch (error) {
     throw error;
