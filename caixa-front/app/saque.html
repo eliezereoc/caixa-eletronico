@@ -36,9 +36,12 @@
           </div>
         </form>
         <label for="tNotas" class="col-form-label tNotas"
-          >Notas disponíveis de</label
+          >Notas disponíveis:
+        </label>
+        <span>
+          {{tn100}} de {{tNotas100 }} - {{tn50}} de {{tNotas50 }} - {{tn20}} de
+          {{tNotas20 }} - {{tn10}} de {{tNotas10 }}</span
         >
-        <span> {{tNotas100 }} {{tNotas50 }} {{tNotas20 }} {{tNotas10 }}</span>
       </div>
     </div>
 
@@ -66,8 +69,10 @@
   </div>
 
   <h3>{{mesnagemSaque}}</h3>
-  <h5 ng-if="tNotas_saque_100">{{tNotas_saque_100}} notas de R$100</h5>
-  <h5 ng-if="tNotas_saque_50">{{tNotas_saque_50}} notas de R$50</h5>
-  <h5 ng-if="tNotas_saque_20">{{tNotas_saque_20}} notas de R$20</h5>
-  <h5 ng-if="tNotas_saque_10">{{tNotas_saque_10}} notas de R$10</h5>
+  <div>
+    <h5 ng-if="tNotas_saque_100">{{tNotas_saque_100}} notas de R$100</h5>
+    <h5 ng-if="tNotas_saque_50">{{tNotas_saque_50}} notas de R$50</h5>
+    <h5 ng-if="tNotas_saque_20">{{tNotas_saque_20}} notas de R$20</h5>
+    <h5 ng-if="tNotas_saque_10">{{tNotas_saque_10}} notas de R$10</h5>
+  </div>
 </div>
