@@ -4,7 +4,7 @@ async function insertCliente(req, res, next) {
   try {
     let cliente = req.body;
 
-    if (!cliente.id || !cliente.nome || !cliente.saldoConta) {
+    if (!cliente.id || !cliente.nome || !cliente.saldo) {
       throw new Error("Todos os campos são obrigatórios!");
     }
 
@@ -59,12 +59,7 @@ async function updateCliente(req, res, next) {
   try {
     let cliente = req.body;
 
-    if (
-      !cliente.id ||
-      !cliente.nome ||
-      !cliente.saldoConta ||
-      !cliente.qtdSaque
-    ) {
+    if (!cliente.id || !cliente.nome || !cliente.saldo || !cliente.saque) {
       throw new Error("Todos os campos são obrigatórios!");
     }
 

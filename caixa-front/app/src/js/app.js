@@ -93,7 +93,7 @@ caixaEletronico.controller("SaqueCtrl", [
     clienteCollection.getCliente(id_cliente).then(function () {
       $scope.nomeCliente = clienteCollection.cliente.nome;
       $scope.saldoConta = clienteCollection.cliente.saldo;
-      $scope.tatalSaques = clienteCollection.cliente.saque;
+      $scope.totalSaques = clienteCollection.cliente.saque;
     });
 
     /**************************************/
@@ -115,7 +115,7 @@ caixaEletronico.controller("SaqueCtrl", [
       $scope.tNotas_saque_10 = 0;
       $scope.mesnagemSaque = "";
 
-      console.log(cedulasDisponiveis);
+      // console.log(cedulasDisponiveis);
 
       if (valorSaque == undefined) {
         $scope.mesnagemSaque = "Informe um valor valodo!";
@@ -123,6 +123,8 @@ caixaEletronico.controller("SaqueCtrl", [
         if (valorSaque > $scope.saldoConta) {
           $scope.mesnagemSaque = "Saldo insuficiente!";
         } else {
+          document.getElementById("bt-sacar").disabled = true;
+
           for (let valor of cedulasDisponiveis) {
             const quantidade = Math.floor(valorASerSacado / valor); //recebe o menor numero inteiro
             if (quantidade === 0) continue; //passa para o proximo valor se o resultado for igual a 0
@@ -151,7 +153,7 @@ caixaEletronico.controller("SaqueCtrl", [
             $scope.tNotas_saque_10 * 10;
 
           $scope.saldoConta = $scope.saldoConta - valorSaque;
-          $scope.tatalSaques = $scope.tatalSaques + 1;
+          $scope.totalSaques = $scope.totalSaques + 1;
 
           qtdN100 = qtdN100 - $scope.tNotas_saque_100;
           qtdN50 = qtdN50 - $scope.tNotas_saque_50;
@@ -161,6 +163,15 @@ caixaEletronico.controller("SaqueCtrl", [
           $scope.qtdCedulas = qtdN100 + qtdN50 + qtdN20 + qtdN10;
 
           $scope.mesnagemSaque = `Saque de R$${$scope.valorSacado} realizado com sucesso!`;
+
+          clienteCollection
+            .putCliente(
+              id_cliente,
+              $scope.nomeCliente,
+              $scope.saldoConta,
+              $scope.totalSaques
+            )
+            .then(function () {});
         }
       }
     };
@@ -178,7 +189,7 @@ caixaEletronico.controller("ExtratoCtrl", [
     clienteCollection.getCliente(id_cliente).then(function (response) {
       $scope.nomeCliente = clienteCollection.cliente.nome;
       $scope.saldoConta = clienteCollection.cliente.saldo;
-      $scope.tatalSaques = clienteCollection.cliente.saque;
+      $scope.totalSaques = clienteCollection.cliente.saque;
     });
   },
 ]);
