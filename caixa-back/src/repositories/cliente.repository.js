@@ -17,8 +17,8 @@ async function insertCliente(cliente) {
       {
         id: cliente.id,
         nome: cliente.nome,
-        saldo: cliente.saldoConta,
-        saque: cliente.qtdSaque,
+        saldo: cliente.saldo,
+        saque: cliente.saque,
       },
     ]);
 
@@ -90,14 +90,13 @@ async function updateCliente(cliente) {
     var newvalues = {
       $set: {
         nome: cliente.nome,
-        saldo: cliente.saldoConta,
-        saque: cliente.qtdSaque,
+        saldo: cliente.saldo,
+        saque: cliente.saque,
       },
     };
 
     const updateCliente = await collection.updateOne(myquery, newvalues);
 
-    console.log(updateCliente);
     return updateCliente;
   } catch (error) {
     throw error;

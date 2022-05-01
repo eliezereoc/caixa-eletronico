@@ -25,27 +25,27 @@ servicesCliente.factory("clienteFactory", [
       );
     };
 
-    // clienteCollection.prototype.putCliente = function (id) {
-    //   const url = `http://localhost:3000/cliente/`;
+    clienteCollection.prototype.putCliente = function (id, nome, saldo, saque) {
+      const url = `http://localhost:3000/cliente/`;
 
-    //   const data = {
-    //     id:"5",
-    //     nome: "Eliezer Oliveira Cardoso",
-    //     "valor": "2500"
-    //   }
+      const data = {
+        id: id.toString(),
+        nome: nome.toString(),
+        saldo: saldo.toString(),
+        saque: parseInt(saque),
+      };
 
-    //   return $http.put(url).then(
-    //     function (response) {
-    //       self.cliente = response.data[0];
-    //       clienteCollection.cliente = response.data[0];
-    //       return response;
-    //     },
-    //     function (response) {
-    //       console.log("Erro...");
-    //       return response;
-    //     }
-    //   );
-    // };
+      return $http.put(url, data).then(
+        function (response) {
+          console.log("RESPOSTA: ", response);
+          return response;
+        },
+        function (response) {
+          console.log("Erro...");
+          return response;
+        }
+      );
+    };
 
     return clienteCollection;
   },
