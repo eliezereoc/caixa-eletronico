@@ -7,12 +7,12 @@
       <div class="HomeCtrl">
         <h2>Selecione uma opção</h2>
 
-        <!-- <div class="HomeCtrl__cliente">
+        <div class="HomeCtrl__cliente">
           <label class="col-form-label">Cliente: </label
           ><span>{{nomeCliente}}</span>
-        </div> -->
+        </div>
 
-        <div class="HomeCtrl__cliente">
+        <!-- <div class="HomeCtrl__cliente">
           <select
             class="form-select"
             aria-label="Default select example"
@@ -22,16 +22,18 @@
             <option value="2">Eliezer de Oliveira</option>
             <option value="3">Valeria Nascimento de Oliveira</option>
           </select>
-        </div>
+        </div> -->
 
         <div class="row HomeCtrl__row">
           <div class="col-auto">
-            <a href="saque" class="btn btn-success" ng-click="recebeID(cli)"
+            <a href="saque" class="btn btn-success" ng-click="recebeID(1)"
               >Saque</a
             >
           </div>
           <div class="col-auto">
-            <a href="extrato" class="btn btn-warning">Extrato</a>
+            <a href="extrato" class="btn btn-warning" ng-click="recebeID(1)"
+              >Extrato</a
+            >
           </div>
         </div>
       </div>
