@@ -58,6 +58,7 @@ async function deleteCliente(req, res, next) {
 async function updateCliente(req, res, next) {
   try {
     let cliente = req.body;
+    const clienteLog = cliente;
 
     if (!cliente.id || !cliente.nome || !cliente.saldo || !cliente.saque) {
       throw new Error("Todos os campos são obrigatórios!");
@@ -65,7 +66,7 @@ async function updateCliente(req, res, next) {
 
     cliente = await ClienteService.updateCliente(cliente);
     res.send(cliente);
-    logger.info(`PUT /cliente - ${JSON.stringify(cliente)}`);
+    logger.info(`PUT /cliente - ${JSON.stringify(clienteLog)}`);
   } catch (err) {
     next(err);
   }

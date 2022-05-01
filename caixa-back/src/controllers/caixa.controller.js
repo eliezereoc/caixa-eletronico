@@ -64,6 +64,7 @@ async function deleteCaixa(req, res, next) {
 async function updateCaixa(req, res, next) {
   try {
     let caixa = req.body;
+    const caixaLog = caixa;
 
     if (
       !caixa.id ||
@@ -72,12 +73,15 @@ async function updateCaixa(req, res, next) {
       !caixa.qtdN20 ||
       !caixa.qtdN10
     ) {
-      throw new Error("Todos os campos são obrigatórios!");
+      throw new Error("PUT - Todos os campos são obrigatórios!");
     }
 
     caixa = await CaixaService.updateCaixa(caixa);
+
+    console.log(caixa);
+
     res.send(caixa);
-    logger.info(`PUT /caixa - ${JSON.stringify(caixa)}`);
+    logger.info(`PUT /caixa - ${JSON.stringify(caixaLog)}`);
   } catch (err) {
     next(err);
   }

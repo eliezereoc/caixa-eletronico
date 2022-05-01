@@ -37,7 +37,6 @@ servicesCliente.factory("clienteFactory", [
 
       return $http.put(url, data).then(
         function (response) {
-          console.log("RESPOSTA: ", response);
           return response;
         },
         function (response) {

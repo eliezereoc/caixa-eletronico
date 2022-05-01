@@ -1,4 +1,5 @@
 let id_cliente = 0;
+let id_notas = 0;
 
 let qtdN100 = 0;
 let qtdN50 = 0;
@@ -72,6 +73,7 @@ caixaEletronico.controller("SaqueCtrl", [
     caixaCollection.getValueCaixa().then(function () {
       //passa a quantidade de cedulas de cada valor
       ///ex.: 10 notas de R$100,00
+      id_notas = caixaCollection.valueCaixa.id;
       qtdN100 = caixaCollection.valueCaixa.qtdN100;
       qtdN50 = caixaCollection.valueCaixa.qtdN50;
       qtdN20 = caixaCollection.valueCaixa.qtdN20;
@@ -115,7 +117,7 @@ caixaEletronico.controller("SaqueCtrl", [
       $scope.tNotas_saque_10 = 0;
       $scope.mesnagemSaque = "";
 
-      // console.log(cedulasDisponiveis);
+      console.log(cedulasDisponiveis);
 
       if (valorSaque == undefined) {
         $scope.mesnagemSaque = "Informe um valor valodo!";
@@ -129,6 +131,7 @@ caixaEletronico.controller("SaqueCtrl", [
             const quantidade = Math.floor(valorASerSacado / valor); //recebe o menor numero inteiro
             if (quantidade === 0) continue; //passa para o proximo valor se o resultado for igual a 0
 
+            //verifica qual o valor da nota e passa a quantidade
             switch (valor) {
               case 100:
                 $scope.tNotas_saque_100 = quantidade;
@@ -146,24 +149,33 @@ caixaEletronico.controller("SaqueCtrl", [
             valorASerSacado = valorASerSacado % valor;
           }
 
+          //multiplica a quantidade de notas pelo valor da nora
+          //soma tudo para apresentar o valor sacado
           $scope.valorSacado =
             $scope.tNotas_saque_100 * 100 +
             $scope.tNotas_saque_50 * 50 +
             $scope.tNotas_saque_20 * 20 +
             $scope.tNotas_saque_10 * 10;
 
+          //diminui o valor sacado do saldo da conta
           $scope.saldoConta = $scope.saldoConta - valorSaque;
+
+          //incrementa a quantidade de saques realizados na conta
           $scope.totalSaques = $scope.totalSaques + 1;
 
+          //Decrementa a quantidade de cedulas de cada nota
           qtdN100 = qtdN100 - $scope.tNotas_saque_100;
           qtdN50 = qtdN50 - $scope.tNotas_saque_50;
           qtdN20 = qtdN20 - $scope.tNotas_saque_20;
           qtdN10 = qtdN10 - $scope.tNotas_saque_10;
 
+          //soma a quantidade de cada cedulas para saber o total de notas disponiveis
           $scope.qtdCedulas = qtdN100 + qtdN50 + qtdN20 + qtdN10;
 
+          //Mensagem de saque bem sucedido e com o valor
           $scope.mesnagemSaque = `Saque de R$${$scope.valorSacado} realizado com sucesso!`;
 
+          //Atualiza o saldo da conta do cliente
           clienteCollection
             .putCliente(
               id_cliente,
@@ -171,6 +183,11 @@ caixaEletronico.controller("SaqueCtrl", [
               $scope.saldoConta,
               $scope.totalSaques
             )
+            .then(function () {});
+
+          //Atualiza o saldo de notas do caixa
+          caixaCollection
+            .putCaixa(id_notas, qtdN100, qtdN50, qtdN20, qtdN10)
             .then(function () {});
         }
       }
