@@ -29,10 +29,14 @@ caixaEletronico.config([
       })
       .otherwise({ redirectTo: "/" });
 
-    $locationProvider.html5Mode(true);
+    // $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(true).hashPrefix("*");
   },
 ]);
 
+/**************************************/
+/* Pagina Home                        */
+/**************************************/
 caixaEletronico.controller("HomeCtrl", [
   "$scope",
   function ($scope) {
@@ -45,6 +49,9 @@ caixaEletronico.controller("HomeCtrl", [
   },
 ]);
 
+/**************************************/
+/* Pagina Saque                       */
+/**************************************/
 caixaEletronico.controller("SaqueCtrl", [
   "$scope",
   "caixaEleFactory",
@@ -56,51 +63,48 @@ caixaEletronico.controller("SaqueCtrl", [
     $scope.tNotas_saque_20 = 0;
     $scope.tNotas_saque_10 = 0;
 
-    //Consulta notas disponiveis
+    /**************************************/
+    /* GET caixa                          */
+    /**************************************/
     cxCollection.getValueCaixa().then(function () {
+      //passa a quantidade de cedulas de cada valor
+      ///ex.: 10 notas de R$100,00
       qtdN100 = cxCollection.valueCaixa.qtdN100;
       qtdN50 = cxCollection.valueCaixa.qtdN50;
       qtdN20 = cxCollection.valueCaixa.qtdN20;
       qtdN10 = cxCollection.valueCaixa.qtdN10;
 
+      //mostra quais notas estão disponiveis
       if (qtdN100) $scope.tNotas100 = "R$100";
       if (qtdN50) $scope.tNotas50 = "R$50";
       if (qtdN20) $scope.tNotas20 = "R$20";
       if (qtdN10) $scope.tNotas10 = "R$10";
+
+      //mostra a soma de todas as notas disponiveis
       $scope.qtdCedulas = qtdN100 + qtdN50 + qtdN20 + qtdN10;
     });
 
-    //consulta dados do cliente
+    /**************************************/
+    /* GET Cliente                        */
+    /**************************************/
     cxCollection.getCliente(id_cliente).then(function () {
       $scope.nomeCliente = cxCollection.cliente.nome;
       $scope.saldoConta = cxCollection.cliente.saldo;
       $scope.tatalSaques = cxCollection.cliente.saque;
     });
 
-    //realiza o saque
+    /**************************************/
+    /* Realiza o saque                    */
+    /**************************************/
     $scope.sacaValor = function (valorSaque) {
-      let resto = valorSaque;
+      let valorASerSacado = valorSaque;
       const cedulasDisponiveis = [];
 
       //monta array com celeulas disponiveis
-      if (qtdN100) {
-        // $scope.tNotas100 = "R$100";
-        cedulasDisponiveis.push(100);
-      }
-      if (qtdN50) {
-        // $scope.tNotas50 = "R$50";
-        cedulasDisponiveis.push(50);
-      }
-      if (qtdN20) {
-        // $scope.tNotas20 = "R$20";
-        cedulasDisponiveis.push(20);
-      }
-      if (qtdN10) {
-        // $scope.tNotas10 = "R$10";
-        cedulasDisponiveis.push(10);
-      }
-
-      $scope.qtdCedulas = qtdN100 + qtdN50 + qtdN20 + qtdN10;
+      if (qtdN100) cedulasDisponiveis.push(100);
+      if (qtdN50) cedulasDisponiveis.push(50);
+      if (qtdN20) cedulasDisponiveis.push(20);
+      if (qtdN10) cedulasDisponiveis.push(10);
 
       $scope.tNotas_saque_100 = 0;
       $scope.tNotas_saque_50 = 0;
@@ -117,7 +121,7 @@ caixaEletronico.controller("SaqueCtrl", [
           $scope.mesnagemSaque = "Saldo insuficiente!";
         } else {
           for (let valor of cedulasDisponiveis) {
-            const quantidade = Math.floor(resto / valor); //recebe o menor numero inteiro
+            const quantidade = Math.floor(valorASerSacado / valor); //recebe o menor numero inteiro
             if (quantidade === 0) continue; //passa para o proximo valor se o resultado for igual a 0
 
             switch (valor) {
@@ -134,8 +138,7 @@ caixaEletronico.controller("SaqueCtrl", [
                 $scope.tNotas_saque_10 = quantidade;
                 break;
             }
-
-            resto = resto % valor;
+            valorASerSacado = valorASerSacado % valor;
           }
 
           $scope.valorSacado =
@@ -147,6 +150,13 @@ caixaEletronico.controller("SaqueCtrl", [
           $scope.saldoConta = $scope.saldoConta - valorSaque;
           $scope.tatalSaques = $scope.tatalSaques + 1;
 
+          qtdN100 = qtdN100 - $scope.tNotas_saque_100;
+          qtdN50 = qtdN50 - $scope.tNotas_saque_50;
+          qtdN20 = qtdN20 - $scope.tNotas_saque_20;
+          qtdN10 = qtdN10 - $scope.tNotas_saque_10;
+
+          $scope.qtdCedulas = qtdN100 + qtdN50 + qtdN20 + qtdN10;
+
           $scope.mesnagemSaque = `Saque de R$${$scope.valorSacado} realizado com sucesso!`;
         }
       }
@@ -154,6 +164,9 @@ caixaEletronico.controller("SaqueCtrl", [
   },
 ]);
 
+/**************************************/
+/* Pagina Extrato                     */
+/**************************************/
 caixaEletronico.controller("ExtratoCtrl", [
   "$scope",
   "caixaEleFactory",
