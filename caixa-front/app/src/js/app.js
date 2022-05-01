@@ -7,7 +7,8 @@ let qtdN10 = 0;
 
 let caixaEletronico = angular.module("caixaEletronico", [
   "ngRoute",
-  "caixaEletronico.services",
+  "caixa.services",
+  "cliente.services",
 ]);
 
 caixaEletronico.config([
@@ -54,9 +55,11 @@ caixaEletronico.controller("HomeCtrl", [
 /**************************************/
 caixaEletronico.controller("SaqueCtrl", [
   "$scope",
-  "caixaEleFactory",
-  function ($scope, caixaEleFactory) {
-    let cxCollection = new caixaEleFactory();
+  "caixaFactory",
+  "clienteFactory",
+  function ($scope, caixaFactory, clienteFactory) {
+    let caixaCollection = new caixaFactory();
+    let clienteCollection = new clienteFactory();
 
     $scope.tNotas_saque_100 = 0;
     $scope.tNotas_saque_50 = 0;
@@ -66,13 +69,13 @@ caixaEletronico.controller("SaqueCtrl", [
     /**************************************/
     /* GET caixa                          */
     /**************************************/
-    cxCollection.getValueCaixa().then(function () {
+    caixaCollection.getValueCaixa().then(function () {
       //passa a quantidade de cedulas de cada valor
       ///ex.: 10 notas de R$100,00
-      qtdN100 = cxCollection.valueCaixa.qtdN100;
-      qtdN50 = cxCollection.valueCaixa.qtdN50;
-      qtdN20 = cxCollection.valueCaixa.qtdN20;
-      qtdN10 = cxCollection.valueCaixa.qtdN10;
+      qtdN100 = caixaCollection.valueCaixa.qtdN100;
+      qtdN50 = caixaCollection.valueCaixa.qtdN50;
+      qtdN20 = caixaCollection.valueCaixa.qtdN20;
+      qtdN10 = caixaCollection.valueCaixa.qtdN10;
 
       //mostra quais notas estão disponiveis
       if (qtdN100) $scope.tNotas100 = "R$100";
@@ -87,10 +90,10 @@ caixaEletronico.controller("SaqueCtrl", [
     /**************************************/
     /* GET Cliente                        */
     /**************************************/
-    cxCollection.getCliente(id_cliente).then(function () {
-      $scope.nomeCliente = cxCollection.cliente.nome;
-      $scope.saldoConta = cxCollection.cliente.saldo;
-      $scope.tatalSaques = cxCollection.cliente.saque;
+    clienteCollection.getCliente(id_cliente).then(function () {
+      $scope.nomeCliente = clienteCollection.cliente.nome;
+      $scope.saldoConta = clienteCollection.cliente.saldo;
+      $scope.tatalSaques = clienteCollection.cliente.saque;
     });
 
     /**************************************/
@@ -169,13 +172,13 @@ caixaEletronico.controller("SaqueCtrl", [
 /**************************************/
 caixaEletronico.controller("ExtratoCtrl", [
   "$scope",
-  "caixaEleFactory",
-  function ($scope, caixaEleFactory) {
-    let cxCollection = new caixaEleFactory();
-    cxCollection.getCliente().then(function (response) {
-      $scope.nomeCliente = cxCollection.cliente[0].nome;
-      $scope.saldoConta = cxCollection.cliente[0].saldoConta;
-      $scope.tatalSaques = cxCollection.cliente[0].qtdSaque;
+  "clienteFactory",
+  function ($scope, clienteFactory) {
+    let clienteCollection = new clienteFactory();
+    clienteCollection.getCliente(id_cliente).then(function (response) {
+      $scope.nomeCliente = clienteCollection.cliente.nome;
+      $scope.saldoConta = clienteCollection.cliente.saldo;
+      $scope.tatalSaques = clienteCollection.cliente.saque;
     });
   },
 ]);
