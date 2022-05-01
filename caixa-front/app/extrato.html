@@ -1,0 +1,30 @@
+<div class="container" ng-controller="ExtratoCtrl">
+  <div class="display">
+    <h1>Extrato da conta</h1>
+    <div class="extrato">
+      <div>
+        <label class="col-form-label">Cliente: </label
+        ><span>{{nomeCliente}}</span>
+      </div>
+
+      <div>
+        <label class="col-form-label">Saldo da conta </label
+        ><span>{{saldoConta | currency:" R$"}}</span>
+      </div>
+
+      <div>
+        <label class="col-form-label">Total de saques: </label
+        ><span>{{tatalSaques | number}}</span>
+      </div>
+
+      <div class="row ExtratoCtrl__row">
+        <div class="col-auto">
+          <a href="saque" class="btn btn-success">Saque</a>
+        </div>
+        <div class="col-auto">
+          <a href="/" class="btn btn-info">Início</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

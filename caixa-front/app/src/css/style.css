@@ -1,0 +1,104 @@
+body {
+  margin: 0 auto;
+  font-size: 16x;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 50px;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.displayHome {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /*text-align: center; */
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.HomeCtrl {
+  text-align: center;
+}
+
+.HomeCtrl .HomeCtrl__cliente {
+  font-size: 20px;
+}
+
+/* .HomeCtrl .HomeCtrl__cliente .col-form-label {
+  font-weight: 600;
+} */
+
+.HomeCtrl > .HomeCtrl__cliente {
+  padding-bottom: 15px;
+}
+
+.HomeCtrl > .HomeCtrl__row {
+  justify-content: center;
+}
+
+.HomeCtrl > .HomeCtrl__row > .col-auto > a,
+button > a {
+  color: white;
+}
+
+.display {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.cxMain__row > .row {
+  justify-content: center;
+}
+
+.cxMain__row > .row > .col-auto {
+  padding: 6px;
+}
+
+.cxMain > .cxMain__row > .row > .col-auto > label,
+.tNotas {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.cxMain > .cxMain__row > label,
+.display > .inf_saque > div > label,
+.display > .extrato > div > label {
+  font-weight: 600;
+}
+
+.display > .extrato,
+.inf_saque {
+  text-align: start;
+  width: 100%;
+}
+
+.display > .extrato {
+  padding-bottom: 20px;
+}
+
+.container > .display > .extrato > .ExtratoCtrl__row {
+  justify-content: center;
+}
+
+.ExtratoCtrl > .display > .extrato > .row {
+  justify-content: center;
+  background-color: aquamarine;
+}
+
+/* @media screen and (max-width: 600px) {
+  body {
+    background-color: aqua;
+  }  
+} */ ;
