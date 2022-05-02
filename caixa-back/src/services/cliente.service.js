@@ -1,4 +1,4 @@
-import ClienteRepository from "../repositories/cliente.repository.js";
+const ClienteRepository = require("../repositories/cliente.repository");
 
 async function insertCliente(cliente) {
   return await ClienteRepository.insertCliente(cliente);
@@ -20,7 +20,7 @@ async function updateCliente(cliente) {
   return await ClienteRepository.updateCliente(cliente);
 }
 
-export default {
+module.exports = {
   insertCliente,
   getClientes,
   getCliente,

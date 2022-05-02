@@ -1,7 +1,5 @@
-// import Caixa from "../models/caixa.model.js";
-import { MongoClient } from "mongodb";
-// import DadosCaixa from "../model/caixa.model.js";
-import dotenv from "dotenv/config.js";
+const { MongoClient } = require("mongodb");
+const dotenv = require("dotenv/config");
 
 const client = new MongoClient(process.env.DB_URL);
 
@@ -108,7 +106,7 @@ async function updateCaixa(caixa) {
   }
 }
 
-export default {
+module.exports = {
   insertCaixa,
   getCaixas,
   getCaixa,

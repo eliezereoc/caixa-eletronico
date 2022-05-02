@@ -1,4 +1,5 @@
 let id_cliente = 0;
+let id_caixa = 0;
 
 let qtdN100 = 0;
 let qtdN50 = 0;
@@ -65,6 +66,7 @@ caixaEletronico.controller("SaqueCtrl", [
     $scope.tNotas_saque_50 = 0;
     $scope.tNotas_saque_20 = 0;
     $scope.tNotas_saque_10 = 0;
+    $scope.qtdCedulas = 0;
 
     /**************************************/
     /* GET caixa                          */
@@ -72,6 +74,7 @@ caixaEletronico.controller("SaqueCtrl", [
     caixaCollection.getValueCaixa().then(function () {
       //passa a quantidade de cedulas de cada valor
       ///ex.: 10 notas de R$100,00
+      id_caixa = caixaCollection.valueCaixa.id;
       qtdN100 = caixaCollection.valueCaixa.qtdN100;
       qtdN50 = caixaCollection.valueCaixa.qtdN50;
       qtdN20 = caixaCollection.valueCaixa.qtdN20;
@@ -83,14 +86,14 @@ caixaEletronico.controller("SaqueCtrl", [
       $scope.tn20 = qtdN20;
       $scope.tn10 = qtdN10;
 
-      //mostra quais notas estão disponiveis
-      if (qtdN100) $scope.tNotas100 = "R$100";
-      if (qtdN50) $scope.tNotas50 = "R$50";
-      if (qtdN20) $scope.tNotas20 = "R$20";
-      if (qtdN10) $scope.tNotas10 = "R$10";
-
       //mostra a soma de todas as notas disponiveis
       $scope.qtdCedulas = qtdN100 + qtdN50 + qtdN20 + qtdN10;
+
+      //mostra quais notas estão disponiveis
+      $scope.tNotas100 = "R$100";
+      $scope.tNotas50 = "R$50";
+      $scope.tNotas20 = "R$20";
+      $scope.tNotas10 = "R$10";
 
       //mostra o saldo do caixa disponivel para saque
       $scope.disponivelSaque =
@@ -211,20 +214,15 @@ caixaEletronico.controller("SaqueCtrl", [
               //incrementa a quantidade de saques realizados na conta
               $scope.totalSaques = $scope.totalSaques + 1;
 
-              //Decrementa a quantidade de cedulas de cada nota
-              qtdN100 = qtdN100 - $scope.tNotas_saque_100;
-              qtdN50 = qtdN50 - $scope.tNotas_saque_50;
-              qtdN20 = qtdN20 - $scope.tNotas_saque_20;
-              qtdN10 = qtdN10 - $scope.tNotas_saque_10;
-
               //Atualiza quantidade de notas de cada valor após o saque
-              $scope.tn100 = qtdN100;
-              $scope.tn50 = qtdN50;
-              $scope.tn20 = qtdN20;
-              $scope.tn10 = qtdN10;
+              $scope.tn100 = qtdN100 - $scope.tNotas_saque_100;
+              $scope.tn50 = qtdN50 - $scope.tNotas_saque_50;
+              $scope.tn20 = qtdN20 - $scope.tNotas_saque_20;
+              $scope.tn10 = qtdN10 - $scope.tNotas_saque_10;
 
-              //soma a quantidade de cada cedulas para saber o total de notas disponiveis
-              $scope.qtdCedulas = qtdN100 + qtdN50 + qtdN20 + qtdN10;
+              //soma a quantidade de cada cedulas para saber o total de notas disponiveis após o saque
+              $scope.qtdCedulas =
+                $scope.tn100 + $scope.tn50 + $scope.tn20 + $scope.tn10;
 
               //Mensagem de saque bem sucedido e com o valor
               $scope.mesnagemSaque = `Saque de R$${$scope.valorSacado} realizado com sucesso!`;
@@ -245,7 +243,13 @@ caixaEletronico.controller("SaqueCtrl", [
 
               // Atualiza o saldo de notas do caixa
               caixaCollection
-                .putCaixa(id_cliente, qtdN100, qtdN50, qtdN20, qtdN10)
+                .putCaixa(
+                  id_caixa,
+                  $scope.tn100,
+                  $scope.tn50,
+                  $scope.tn20,
+                  $scope.tn10
+                )
                 .then(function () {});
             }
           }

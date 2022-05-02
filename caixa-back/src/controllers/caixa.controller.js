@@ -1,4 +1,4 @@
-import CaixaService from "../services/caixa.service.js";
+const CaixaService = require("../services/caixa.service");
 
 async function insertCaixa(req, res, next) {
   try {
@@ -66,15 +66,15 @@ async function updateCaixa(req, res, next) {
     let caixa = req.body;
     const caixaLog = caixa;
 
-    if (
-      !caixa.id ||
-      !caixa.qtdN100 ||
-      !caixa.qtdN50 ||
-      !caixa.qtdN20 ||
-      !caixa.qtdN10
-    ) {
-      throw new Error("PUT - Todos os campos são obrigatórios!");
-    }
+    // if (
+    //   !caixa.id ||
+    //   !caixa.qtdN100 ||
+    //   !caixa.qtdN50 ||
+    //   !caixa.qtdN20 ||
+    //   !caixa.qtdN10
+    // ) {
+    //   throw new Error("PUT - Todos os campos são obrigatórios!");
+    // }
 
     caixa = await CaixaService.updateCaixa(caixa);
 
@@ -87,7 +87,7 @@ async function updateCaixa(req, res, next) {
   }
 }
 
-export default {
+module.exports = {
   insertCaixa,
   getCaixas,
   getCaixa,

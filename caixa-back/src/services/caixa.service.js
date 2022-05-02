@@ -1,4 +1,4 @@
-import CaixaRepository from "../repositories/caixa.repository.js";
+const CaixaRepository = require("../repositories/caixa.repository");
 
 async function insertCaixa(caixa) {
   return await CaixaRepository.insertCaixa(caixa);
@@ -20,7 +20,7 @@ async function updateCaixa(caixa) {
   return await CaixaRepository.updateCaixa(caixa);
 }
 
-export default {
+module.exports = {
   insertCaixa,
   getCaixas,
   getCaixa,

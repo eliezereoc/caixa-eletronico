@@ -1,5 +1,5 @@
-import express from "express";
-import CaixaController from "../controllers/caixa.controller.js";
+const express = require("express");
+const CaixaController = require("../controllers/caixa.controller");
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.get("/:id", CaixaController.getCaixa);
 router.delete("/:id", CaixaController.deleteCaixa);
 router.put("/", CaixaController.updateCaixa);
 
-export default router;
+module.exports = router;
