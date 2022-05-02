@@ -11,7 +11,7 @@ const caixa = {
 
 const updateCaixa = {
   id: "1",
-  qtdN100: 500,
+  qtdN100: 5,
   qtdN50: 20,
   qtdN20: 8,
   qtdN10: 3,
