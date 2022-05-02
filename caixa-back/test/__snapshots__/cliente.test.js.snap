@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Teste de Integração DELETE Cliente: Cadastro excluido com sucesso! 1`] = `200`;
+
+exports[`Teste de Integração GET Cliente 1`] = `Array []`;
+
+exports[`Teste de Integração GET Cliente: 0 1`] = `undefined`;
+
+exports[`Teste de Integração GET Cliente: 0 2`] = `undefined`;
+
+exports[`Teste de Integração GET Cliente: 1 1`] = `
+Object {
+  "_id": "627013da3d609717287007de",
+  "id": "1",
+  "nome": "Eliezer de Oliveira Cardoso",
+  "saldo": 10000,
+  "saque": 0,
+}
+`;
+
+exports[`Teste de Integração GET Cliente: 1 2`] = `
+Object {
+  "_id": "627013da3d609717287007de",
+  "id": "1",
+  "nome": "Eliezer de Oliveira Cardoso",
+  "saldo": 10000,
+  "saque": 0,
+}
+`;
+
+exports[`Teste de Integração GET Cliente: 10000 1`] = `undefined`;
+
+exports[`Teste de Integração GET Cliente: 10000 2`] = `undefined`;
+
+exports[`Teste de Integração GET Cliente: Eliezer de Oliveira Cardoso 1`] = `undefined`;
+
+exports[`Teste de Integração GET Cliente: Eliezer de Oliveira Cardoso 2`] = `undefined`;
+
+exports[`Teste de Integração POST Cliente: 0 1`] = `undefined`;
+
+exports[`Teste de Integração POST Cliente: 1 1`] = `undefined`;
+
+exports[`Teste de Integração POST Cliente: 10000 1`] = `undefined`;
+
+exports[`Teste de Integração POST Cliente: Eliezer de Oliveira Cardoso 1`] = `undefined`;

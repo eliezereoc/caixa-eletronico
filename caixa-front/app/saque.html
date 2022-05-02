@@ -47,17 +47,23 @@
             >
           </div>
         </form>
-        <label for="tNotas" class="col-form-label tNotas"
-          >Notas disponíveis:
-        </label>
-        <span>
-          {{tn100}} de {{tNotas100 }} - {{tn50}} de {{tNotas50 }} - {{tn20}} de
-          {{tNotas20 }} - {{tn10}} de {{tNotas10 }}</span
-        >
-        <label for="tNotas" class="col-form-label tNotas"
-          >Disponível para Saque:
-        </label>
-        <span>{{disponivelSaque | currency:" R$"}}</span>
+
+        <div>
+          <label for="tNotas" class="col-form-label tNotas"
+            >Notas disponíveis:
+          </label>
+          <span>
+            {{tn100}} de {{tNotas100 }}, {{tn50}} de {{tNotas50 }}, {{tn20}} de
+            {{tNotas20 }}, {{tn10}} de {{tNotas10 }}</span
+          >
+        </div>
+
+        <div>
+          <label for="tNotas" class="col-form-label tNotas"
+            >Disponível para Saque:
+          </label>
+          <span>{{disponivelSaque | currency:" R$"}}</span>
+        </div>
       </div>
     </div>
 
@@ -69,7 +75,7 @@
 
       <div>
         <label class="col-form-label">Quantidade cédulas disponíveis: </label
-        ><span>{{qtdCedulas}}</span>
+        ><span>{{ qtdCedulas }}</span>
       </div>
 
       <div>

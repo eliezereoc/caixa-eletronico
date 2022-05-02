@@ -1,7 +1,5 @@
-// import Cliente from "../models/cliente.model.js";
-import { MongoClient } from "mongodb";
-import DadosCaixa from "../model/cliente.model.js";
-import dotenv from "dotenv/config.js";
+const { MongoClient } = require("mongodb");
+const dotenv = require("dotenv/config");
 
 const client = new MongoClient(process.env.DB_URL);
 
@@ -106,7 +104,7 @@ async function updateCliente(cliente) {
   }
 }
 
-export default {
+module.exports = {
   insertCliente,
   getClientes,
   getCliente,

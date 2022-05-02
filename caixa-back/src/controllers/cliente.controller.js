@@ -1,4 +1,4 @@
-import ClienteService from "../services/cliente.service.js";
+const ClienteService = require("../services/cliente.service");
 
 async function insertCliente(req, res, next) {
   try {
@@ -74,7 +74,15 @@ async function updateCliente(req, res, next) {
   }
 }
 
-export default {
+// export default {
+//   insertCliente,
+//   getClientes,
+//   getCliente,
+//   deleteCliente,
+//   updateCliente,
+// };
+
+module.exports = {
   insertCliente,
   getClientes,
   getCliente,
