@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "57a40a27-ec86-4e21-801b-86bac1caacc0",
+		"name": "Desafio-MongoDb-Caixa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET-TODOS-CAIXA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/caixa/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"caixa",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CAIXA",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/caixa/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"caixa",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CAIXA-ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/caixa/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"caixa",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST-CAIXA",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"id\":\"1\",\r\n    \"qtdN100\": 130,\r\n    \"qtdN50\": 35,  \r\n    \"qtdN20\": 120,\r\n    \"qtdN10\": 80\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/caixa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"caixa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT-CAIXA",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"1\",\r\n    \"qtdN100\": 5,\r\n    \"qtdN50\": 10,\r\n    \"qtdN20\": 8,\r\n    \"qtdN10\": 3\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/caixa/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"caixa",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
