@@ -29,10 +29,22 @@
             </button>
           </div>
           <div class="col-auto">
-            <button type="reset" class="btn btn-warning">Limpar</button>
+            <button type="reset" class="btn btn-warning" id="bt-limpar">
+              Limpar
+            </button>
           </div>
           <div class="col-auto">
-            <a href="/" class="btn btn-info">Início</a>
+            <a href="/" class="btn btn-info" id="bt-inicio">Início</a>
+          </div>
+
+          <div class="col-auto">
+            <a
+              href="/"
+              class="btn btn-success"
+              style="display: none"
+              id="bt-novosaque"
+              >Novo Saque</a
+            >
           </div>
         </form>
         <label for="tNotas" class="col-form-label tNotas"
@@ -42,6 +54,10 @@
           {{tn100}} de {{tNotas100 }} - {{tn50}} de {{tNotas50 }} - {{tn20}} de
           {{tNotas20 }} - {{tn10}} de {{tNotas10 }}</span
         >
+        <label for="tNotas" class="col-form-label tNotas"
+          >Disponível para Saque:
+        </label>
+        <span>{{disponivelSaque | currency:" R$"}}</span>
       </div>
     </div>
 
