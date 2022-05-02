@@ -32,7 +32,7 @@ global.userLoggedId = "";
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 50, // limite solicitações por janela
+  max: 100, // limite solicitações por janela
 });
 
 const app = express();

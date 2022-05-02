@@ -40,7 +40,7 @@ servicesCliente.factory("clienteFactory", [
           return response;
         },
         function (response) {
-          console.log("Erro...");
+          // console.log("Erro..." + response);
           return response;
         }
       );

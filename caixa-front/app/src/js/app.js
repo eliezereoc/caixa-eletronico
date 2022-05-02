@@ -91,6 +91,10 @@ caixaEletronico.controller("SaqueCtrl", [
 
       //mostra a soma de todas as notas disponiveis
       $scope.qtdCedulas = qtdN100 + qtdN50 + qtdN20 + qtdN10;
+
+      //mostra o saldo do caixa disponivel para saque
+      $scope.disponivelSaque =
+        qtdN100 * 100 + qtdN50 * 50 + qtdN20 * 20 + qtdN10 * 10;
     });
 
     /**************************************/
@@ -106,14 +110,7 @@ caixaEletronico.controller("SaqueCtrl", [
     /* Realiza o saque                    */
     /**************************************/
     $scope.sacaValor = function (valorSaque) {
-      let valorASerSacado = valorSaque;
-      const cedulasDisponiveis = [];
-
-      //monta array com celeulas disponiveis
-      if (qtdN100) cedulasDisponiveis.push(100);
-      if (qtdN50) cedulasDisponiveis.push(50);
-      if (qtdN20) cedulasDisponiveis.push(20);
-      if (qtdN10) cedulasDisponiveis.push(10);
+      let resto = valorSaque;
 
       $scope.tNotas_saque_100 = 0;
       $scope.tNotas_saque_50 = 0;
@@ -121,98 +118,124 @@ caixaEletronico.controller("SaqueCtrl", [
       $scope.tNotas_saque_10 = 0;
       $scope.mesnagemSaque = "";
 
-      // console.log(cedulasDisponiveis);
-
       if (valorSaque == undefined) {
         $scope.mesnagemSaque = "Informe um valor valodo!";
       } else {
         if (valorSaque > $scope.saldoConta) {
           $scope.mesnagemSaque = "Saldo insuficiente!";
         } else {
-          document.getElementById("bt-sacar").disabled = true;
+          if ($scope.disponivelSaque < valorSaque) {
+            $scope.mesnagemSaque = "Saldo do caixa insuficiente!";
+          } else {
+            //realiza o saque
 
-          for (let valor of cedulasDisponiveis) {
-            const quantidade = Math.floor(valorASerSacado / valor); //recebe o menor numero inteiro
-            if (quantidade === 0) continue; //passa para o proximo valor se o resultado for igual a 0
+            document.getElementById("bt-sacar").disabled = true;
 
-            //verifica qual o valor da nota e passa a quantidade
-            switch (valor) {
-              case 100:
-                // if (quantidade > qtdN100) {
-                //   $scope.tNotas_saque_100 = quantidade - qtdN100;
-
-                //   valorASerSacado =
-                //     valorASerSacado - $scope.tNotas_saque_100 * 100;
-                // } else {
+            if (qtdN100 && resto >= 100) {
+              const quantidade = Math.floor(valorSaque / 100);
+              if (quantidade >= qtdN100) {
+                resto = valorSaque - qtdN100 * 100;
+                valorSaque = resto;
+                $scope.tNotas_saque_100 = qtdN100;
+                qtdN100 = 0;
+                valorSaque = resto;
+              } else {
+                resto = valorSaque - quantidade * 100;
+                valorSaque = resto;
+                qtdN100 = qtdN100 - quantidade;
                 $scope.tNotas_saque_100 = quantidade;
-                // }
-                // console.log($scope.tNotas_saque_100);
-                // console.log(valorASerSacado);
-                break;
-              case 50:
-                $scope.tNotas_saque_50 = quantidade;
-                break;
-              case 20:
-                $scope.tNotas_saque_20 = quantidade;
-                break;
-              case 10:
-                $scope.tNotas_saque_10 = quantidade;
-                break;
+              }
+              $scope.tn100 = qtdN100; //Atualiza quantidade de notas
             }
-            valorASerSacado = valorASerSacado % valor;
 
-            // console.log("VLR a ser sacado", valorASerSacado);
-            // console.log("qtd notas", quantidade);
-            // console.log("VLR da cedula", valor);
-            // console.log("Cedulas disponiveis", cedulasDisponiveis);
+            if (qtdN50 && resto >= 50) {
+              const quantidade = Math.floor(valorSaque / 50);
+              if (quantidade >= qtdN50) {
+                resto = valorSaque - qtdN50 * 50;
+                $scope.tNotas_saque_50 = qtdN50;
+                qtdN50 = 0;
+                valorSaque = resto;
+              } else {
+                resto = valorSaque - quantidade * 50;
+                valorSaque = resto;
+                qtdN50 = qtdN50 - quantidade;
+                $scope.tNotas_saque_50 = quantidade;
+              }
+              $scope.tn50 = qtdN50; //Atualiza quantidade de notas
+            }
+
+            if (qtdN20 && resto >= 20) {
+              const quantidade = Math.floor(valorSaque / 20);
+
+              if (quantidade >= qtdN20) {
+                resto = valorSaque - qtdN20 * 20;
+                $scope.tNotas_saque_20 = qtdN20;
+                qtdN20 = 0;
+                valorSaque = resto;
+              } else {
+                resto = valorSaque - quantidade * 20;
+                valorSaque = resto;
+                qtdN20 = qtdN20 - quantidade;
+                $scope.tNotas_saque_20 = quantidade;
+              }
+              $scope.tn20 = qtdN20; //Atualiza quantidade de notas
+            }
+
+            if (qtdN10 && resto >= 10) {
+              const quantidade = Math.floor(valorSaque / 10);
+              if (quantidade >= qtdN10) {
+                resto = valorSaque - qtdN10 * 10;
+                $scope.tNotas_saque_10 = qtdN10;
+                qtdN10 = 0;
+                valorSaque = resto;
+              } else {
+                resto = valorSaque - quantidade * 10;
+                valorSaque = resto;
+                qtdN10 = qtdN10 - quantidade;
+                $scope.tNotas_saque_10 = quantidade;
+              }
+              $scope.tn10 = qtdN10; //Atualiza quantidade de notas
+            }
+
+            //multiplica a quantidade de notas pelo valor da nota
+            //soma tudo para apresentar o valor total sacado
+            $scope.valorSacado =
+              $scope.tNotas_saque_100 * 100 +
+              $scope.tNotas_saque_50 * 50 +
+              $scope.tNotas_saque_20 * 20 +
+              $scope.tNotas_saque_10 * 10;
+
+            //diminui o valor sacado do saldo da conta
+            $scope.saldoConta = $scope.saldoConta - $scope.valorSacado;
+
+            //incrementa a quantidade de saques realizados na conta
+            $scope.totalSaques = $scope.totalSaques + 1;
+
+            //soma a quantidade de cada cedulas para saber o total de notas disponiveis
+            $scope.qtdCedulas = qtdN100 + qtdN50 + qtdN20 + qtdN10;
+
+            //Mensagem de saque bem sucedido e com o valor
+            $scope.mesnagemSaque = `Saque de R$${$scope.valorSacado} realizado com sucesso!`;
+
+            //Atualiza saldo disponivel (do caixa)
+            $scope.disponivelSaque =
+              $scope.disponivelSaque - $scope.valorSacado;
+
+            //Atualiza o saldo da conta do cliente
+            clienteCollection
+              .putCliente(
+                id_cliente,
+                $scope.nomeCliente,
+                $scope.saldoConta,
+                $scope.totalSaques
+              )
+              .then(function () {});
+
+            // Atualiza o saldo de notas do caixa
+            caixaCollection
+              .putCaixa(id_cliente, qtdN100, qtdN50, qtdN20, qtdN10)
+              .then(function () {});
           }
-
-          //multiplica a quantidade de notas pelo valor da nora
-          //soma tudo para apresentar o valor sacado
-          $scope.valorSacado =
-            $scope.tNotas_saque_100 * 100 +
-            $scope.tNotas_saque_50 * 50 +
-            $scope.tNotas_saque_20 * 20 +
-            $scope.tNotas_saque_10 * 10;
-
-          //diminui o valor sacado do saldo da conta
-          $scope.saldoConta = $scope.saldoConta - valorSaque;
-
-          //incrementa a quantidade de saques realizados na conta
-          $scope.totalSaques = $scope.totalSaques + 1;
-
-          //Decrementa a quantidade de cedulas de cada nota
-          qtdN100 = qtdN100 - $scope.tNotas_saque_100;
-          qtdN50 = qtdN50 - $scope.tNotas_saque_50;
-          qtdN20 = qtdN20 - $scope.tNotas_saque_20;
-          qtdN10 = qtdN10 - $scope.tNotas_saque_10;
-
-          //Atualiza quantidade de notas de cada valor após o saque
-          $scope.tn100 = qtdN100;
-          $scope.tn50 = qtdN50;
-          $scope.tn20 = qtdN20;
-          $scope.tn10 = qtdN10;
-
-          //soma a quantidade de cada cedulas para saber o total de notas disponiveis
-          $scope.qtdCedulas = qtdN100 + qtdN50 + qtdN20 + qtdN10;
-
-          //Mensagem de saque bem sucedido e com o valor
-          $scope.mesnagemSaque = `Saque de R$${$scope.valorSacado} realizado com sucesso!`;
-
-          //Atualiza o saldo da conta do cliente
-          // clienteCollection
-          //   .putCliente(
-          //     id_cliente,
-          //     $scope.nomeCliente,
-          //     $scope.saldoConta,
-          //     $scope.totalSaques
-          //   )
-          //   .then(function () {});
-
-          //Atualiza o saldo de notas do caixa
-          // caixaCollection
-          //   .putCaixa(id_cliente, qtdN100, qtdN50, qtdN20, qtdN10)
-          //   .then(function () {});
         }
       }
     };
