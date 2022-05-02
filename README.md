@@ -67,5 +67,5 @@
     };
 
 <p style="font-size: 15px" >
-    A pasta utils/postman contem os arquivos caso queira realizar teste atraves do mesmo.
+    A pasta utils/postman contem os arquivos .json caso queira realizar teste atraves do mesmo.
 </p>
